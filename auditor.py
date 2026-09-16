@@ -6,6 +6,10 @@ while True:
     if stock == "quit":
        break
 
+    if stock.startswith("-") and stock[1:].isdigit():
+        print("Negative stock quantities are not allowed.")
+        continue
+
     if not stock.isdigit():
         print("Invalid input. Please enter a number.")
         continue
