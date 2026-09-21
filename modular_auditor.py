@@ -17,7 +17,12 @@ def get_valid_input():
 
     return int(stock)
 
+def process_delivery(current_total, new_value):
+    return current_total + new_value
 
+
+
+# old w2lab 
 while True:
     stock = input("Enter stock quantity (or 'quit' to exit): ")
 
