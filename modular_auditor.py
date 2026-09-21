@@ -20,6 +20,8 @@ def get_valid_input():
 def process_delivery(current_total, new_value):
     return current_total + new_value
 
+def calculate_tax(amount):
+    return amount * 0.10  #10%
 
 
 # old w2lab 
