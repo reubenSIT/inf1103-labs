@@ -25,31 +25,28 @@ def calculate_tax(amount):
     return amount * 0.10  #10%
 
 def generate_report(total_units, failed_attempts):
-    print("Total Units Processed:", total_units)
+    print("Total Deliveries Processed:", total_units)
     print("Number of Failed/Rejected Entries:", failed_attempts)
 
-# old w2lab 
+# old w2lab + new stuff
 while True:
-    stock = input("Enter stock quantity (or 'quit' to exit): ")
+    stock = get_valid_input()
 
     if stock == "quit":
-       print("Total Units Processed:", inventory)
-       print("Number of Failed/Rejected Entries:", failed_entries)
-       break
+        generate_report(deliveries_processed,failed_entries)
+        break
 
-    if stock.startswith("-") and stock[1:].isdigit():
-        print("Negative stock quantities are not allowed.")
+    if stock is None:
         failed_entries += 1
         continue
 
-    if not stock.isdigit():
-        print("Invalid input. Please enter a number.")
-        failed_entries += 1
-        continue
+    inventory = process_delivery(inventory, stock)
+    deliveries_processed += 1
 
-    stock = int(stock)
-    inventory += stock
+    tax = calculate_tax(stock)
+
     print("Inventory:", inventory)
+    print("Tax for this delivery:", tax)
 
     if inventory > 500:
         print("Alert: Inventory exceeds 500 units")
