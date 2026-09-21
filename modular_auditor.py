@@ -1,5 +1,6 @@
 inventory = 0     # initialize inventory to zero
 failed_entries = 0
+deliveries_processed = 0
 
 def get_valid_input():
     stock = input("Enter stock quantity (or 'quit' to exit): ")
@@ -26,10 +27,6 @@ def calculate_tax(amount):
 def generate_report(total_units, failed_attempts):
     print("Total Units Processed:", total_units)
     print("Number of Failed/Rejected Entries:", failed_attempts)
-
-def generate_report(total_units, failed_attempts):
-    print("Total Units Processed:", total_units)
-    print("Number of Failed/Rejected Entries:", failed_attempts)    
 
 # old w2lab 
 while True:
