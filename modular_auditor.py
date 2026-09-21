@@ -23,6 +23,13 @@ def process_delivery(current_total, new_value):
 def calculate_tax(amount):
     return amount * 0.10  #10%
 
+def generate_report(total_units, failed_attempts):
+    print("Total Units Processed:", total_units)
+    print("Number of Failed/Rejected Entries:", failed_attempts)
+
+def generate_report(total_units, failed_attempts):
+    print("Total Units Processed:", total_units)
+    print("Number of Failed/Rejected Entries:", failed_attempts)    
 
 # old w2lab 
 while True:
