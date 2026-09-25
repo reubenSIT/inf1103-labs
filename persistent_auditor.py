@@ -1,15 +1,21 @@
 failed_entries = 0
 deliveries_processed = 0
-transaction_history = []
 
 def load_inventory():
     try:
         with open("inventory.txt", "r") as file:
             inventory = int(file.readline())
-            return inventory
+            history_line = file.readline().strip()
+
+            if history_line:
+                history = list(map(int, history_line.split(",")))
+            else:
+                history = []
+
+            return inventory, history
 
     except FileNotFoundError:
-        return 0
+        return 0, []
 
 def save_inventory(total, history):
     with open("inventory.txt", "w") as file:
@@ -42,7 +48,7 @@ def generate_report(total_units, failed_attempts):
     print("Total Deliveries Processed:", total_units)
     print("Number of Failed/Rejected Entries:", failed_attempts)
 
-inventory = load_inventory()
+inventory, transaction_history = load_inventory()
 
 # old w2lab + new stuff
 while True:
