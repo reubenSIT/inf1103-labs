@@ -11,6 +11,11 @@ def load_inventory():
     except FileNotFoundError:
         return 0
 
+def save_inventory(total, history):
+    with open("inventory.txt", "w") as file:
+        file.write(str(total) + "\n")
+        file.write(",".join(map(str, history)))
+
 def get_valid_input():
     stock = input("Enter stock quantity (or 'quit' to exit): ")
 
@@ -44,6 +49,7 @@ while True:
     stock = get_valid_input()
 
     if stock == "quit":
+        save_inventory(inventory, transaction_history)
         generate_report(deliveries_processed,failed_entries)
         break
 
@@ -54,7 +60,7 @@ while True:
     inventory = process_delivery(inventory, stock)
     deliveries_processed += 1
     transaction_history.append(stock)
-    print("Transaction History:", transaction_history)  # to see transaction history in list
+    # print("Transaction History:", transaction_history)  # to see transaction history in list
 
     tax = calculate_tax(stock)
 
