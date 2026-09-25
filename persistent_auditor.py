@@ -1,5 +1,6 @@
 failed_entries = 0
 deliveries_processed = 0
+transaction_history = []
 
 def load_inventory():
     try:
@@ -52,6 +53,8 @@ while True:
 
     inventory = process_delivery(inventory, stock)
     deliveries_processed += 1
+    transaction_history.append(stock)
+    print("Transaction History:", transaction_history)  # to see transaction history in list
 
     tax = calculate_tax(stock)
 
