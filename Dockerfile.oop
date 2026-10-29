@@ -1,0 +1,8 @@
+FROM python:3.13-slim
+
+WORKDIR /usr/src/app
+
+COPY oop_inventory_manager.py .
+COPY inventory.json .
+
+CMD ["python", "oop_inventory_manager.py"]
