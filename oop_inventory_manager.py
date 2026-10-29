@@ -1,3 +1,6 @@
+import json
+
+
 class Product:
     def __init__(self, product_id, name, price, stock):
         self.__product_id = product_id
@@ -16,6 +19,14 @@ class Product:
         print("Name:", self.__name)
         print(f"Price: ${self.__price:.2f}")
         print("Stock:", self.__stock)
+
+    def to_dict(self):
+        return {
+            "id": self.__product_id,
+            "name": self.__name,
+            "price": self.__price,
+            "stock": self.__stock
+        }
 
 
 class Inventory:
@@ -40,15 +51,52 @@ class Inventory:
             product.display_information()
             print("--------------------------------")
 
+    def to_list(self):
+        return [
+            product.to_dict()
+            for product in self.__products
+        ]
+
+
+# File handling functions
+
+def load_inventory():
+    inventory = Inventory()
+
+    try:
+        with open("inventory.json", "r") as file:
+            data = json.load(file)
+
+        for item in data:
+            product = Product(
+                item["id"],
+                item["name"],
+                item["price"],
+                item["stock"]
+            )
+
+            inventory.add_product(product)
+
+        print("inventory.json found.")
+        print("Inventory loaded successfully.")
+
+    except FileNotFoundError:
+        print("inventory.json not found.")
+        print("Starting with an empty inventory.")
+
+    return inventory
+
+
+def save_inventory(inventory):
+    with open("inventory.json", "w") as file:
+        json.dump(inventory.to_list(), file, indent=4)
+
+    print("Inventory saved successfully to inventory.json.")
+
 
 # Main program
 
-inventory = Inventory()
-
-# Temporary products until JSON loading is added
-inventory.add_product(Product("P001", "Laptop", 1200.00, 15))
-inventory.add_product(Product("P002", "Mouse", 25.50, 40))
-inventory.add_product(Product("P003", "Keyboard", 45.00, 25))
+inventory = load_inventory()
 
 
 while True:
@@ -57,7 +105,8 @@ while True:
     print("2. Add Product")
     print("3. Update Stock")
     print("4. Search Product")
-    print("5. Exit")
+    print("5. Save Inventory")
+    print("6. Exit")
     print("----------------------------")
 
     option = input("Enter option: ")
@@ -73,7 +122,9 @@ while True:
         price = float(input("Price: "))
         stock = int(input("Stock Quantity: "))
 
-        new_product = Product(product_id, name, price, stock)
+        new_product = Product(
+            product_id, name, price, stock
+        )
 
         inventory.add_product(new_product)
 
@@ -83,7 +134,6 @@ while True:
         print("Update Stock")
 
         product_id = input("Enter Product ID: ")
-
         found_product = inventory.search_product(product_id)
 
         if found_product is not None:
@@ -91,7 +141,6 @@ while True:
             found_product.display_information()
 
             new_stock = int(input("New Stock Quantity: "))
-
             found_product.update_stock(new_stock)
 
             print("Stock updated successfully!")
@@ -102,7 +151,6 @@ while True:
         print("Search Product")
 
         product_id = input("Enter Product ID: ")
-
         found_product = inventory.search_product(product_id)
 
         if found_product is not None:
@@ -112,6 +160,13 @@ while True:
             print("Product not found.")
 
     elif option == "5":
+        print("Saving inventory...")
+        save_inventory(inventory)
+
+    elif option == "6":
+        print("Saving inventory before exit...")
+        save_inventory(inventory)
+        print("Thank you for using Inventory Management System.")
         print("Program terminated.")
         break
 

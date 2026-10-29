@@ -28,5 +28,11 @@
         "name": "Headphones",
         "price": 89.9,
         "stock": 30
+    },
+    {
+        "id": "P006",
+        "name": "Speaker",
+        "price": 59.9,
+        "stock": 25
     }
 ]
