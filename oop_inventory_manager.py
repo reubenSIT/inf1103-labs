@@ -41,29 +41,79 @@ class Inventory:
             print("--------------------------------")
 
 
-# Temporary testing
+# Main program
 
 inventory = Inventory()
 
-product1 = Product("P001", "Laptop", 1200.00, 15)
-product2 = Product("P002", "Mouse", 25.50, 40)
-product3 = Product("P003", "Keyboard", 45.00, 25)
+# Temporary products until JSON loading is added
+inventory.add_product(Product("P001", "Laptop", 1200.00, 15))
+inventory.add_product(Product("P002", "Mouse", 25.50, 40))
+inventory.add_product(Product("P003", "Keyboard", 45.00, 25))
 
-inventory.add_product(product1)
-inventory.add_product(product2)
-inventory.add_product(product3)
 
-inventory.display_all()
+while True:
+    print("\n----------- MENU -----------")
+    print("1. Display All Products")
+    print("2. Add Product")
+    print("3. Update Stock")
+    print("4. Search Product")
+    print("5. Exit")
+    print("----------------------------")
 
-print("\nSearching for P002...\n")
+    option = input("Enter option: ")
 
-found_product = inventory.search_product("P002")
+    if option == "1":
+        inventory.display_all()
 
-if found_product is not None:
-    found_product.display_information()
+    elif option == "2":
+        print("Add New Product")
 
-    print("\nUpdating P002 stock to 50...\n")
-    found_product.update_stock(50)
-    found_product.display_information()
-else:
-    print("Product not found.")
+        product_id = input("Product ID: ")
+        name = input("Product Name: ")
+        price = float(input("Price: "))
+        stock = int(input("Stock Quantity: "))
+
+        new_product = Product(product_id, name, price, stock)
+
+        inventory.add_product(new_product)
+
+        print("Product added successfully!")
+
+    elif option == "3":
+        print("Update Stock")
+
+        product_id = input("Enter Product ID: ")
+
+        found_product = inventory.search_product(product_id)
+
+        if found_product is not None:
+            print("Product Found:")
+            found_product.display_information()
+
+            new_stock = int(input("New Stock Quantity: "))
+
+            found_product.update_stock(new_stock)
+
+            print("Stock updated successfully!")
+        else:
+            print("Product not found.")
+
+    elif option == "4":
+        print("Search Product")
+
+        product_id = input("Enter Product ID: ")
+
+        found_product = inventory.search_product(product_id)
+
+        if found_product is not None:
+            print("Product Found:")
+            found_product.display_information()
+        else:
+            print("Product not found.")
+
+    elif option == "5":
+        print("Program terminated.")
+        break
+
+    else:
+        print("Invalid option. Please try again.")
