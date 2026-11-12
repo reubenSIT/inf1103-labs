@@ -237,7 +237,6 @@ def main() -> None:
 
     order1.add_order_line(physical, 1)
     order1.add_order_line(digital, 2)
-
     order2.add_order_line(physical, 2)
 
     print("\nOrders created:")
@@ -268,6 +267,9 @@ def main() -> None:
     physical.display_information()
     digital.display_information()
 
+    inventory_a.remove_product("D001")
+    inventory_b.remove_product("P001")
+
     mixed_inventory = Inventory("Mixed Inventory")
     mixed_inventory.add_product(physical)
     mixed_inventory.add_product(digital)
@@ -276,6 +278,10 @@ def main() -> None:
     for product in mixed_inventory.products:
         show_product_details(product)
         print("--------------------------------")
+
+    print("\nChecking previous inventories:")
+    inventory_a.display_all_products()
+    inventory_b.display_all_products()
 
 
 if __name__ == "__main__":
