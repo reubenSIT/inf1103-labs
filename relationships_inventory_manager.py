@@ -89,32 +89,32 @@ class DigitalProduct(Product):
 class Inventory:
     def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__products: list[Product] = []
+        self.products: list[Product] = []
 
     def add_product(self, product: Product) -> None:
-        self.__products.append(product)
+        self.products.append(product)
 
     def find_product(self, product_id: str) -> Product | None:
-        for product in self.__products:
+        for product in self.products:
             if product.get_product_id() == product_id:
                 return product
         return None
 
     def remove_product(self, product_id: str) -> Product | None:
-        for product in self.__products:
+        for product in self.products:
             if product.get_product_id() == product_id:
-                self.__products.remove(product)
+                self.products.remove(product)
                 return product
         return None
 
     def display_all_products(self) -> None:
         print(f"\n=== {self.__name} ===")
 
-        if not self.__products:
+        if not self.products:
             print("Inventory is empty.")
             return
 
-        for product in self.__products:
+        for product in self.products:
             product.display_information()
             print("Fulfilment:", product.get_fulfilment_info())
             print("--------------------------------")
@@ -167,6 +167,11 @@ class Order:
             print(f"Subtotal: ${line.calculate_subtotal():.2f}")
 
         print(f"Total: ${self.calculate_total():.2f}")
+
+
+def show_product_details(product: Product) -> None:
+    product.display_information()
+    print("Fulfilment:", product.get_fulfilment_info())
 
 
 def main() -> None:
@@ -251,6 +256,26 @@ def main() -> None:
 
     print("\nLaptop still exists:")
     physical.display_information()
+
+    print("\nProduct details:")
+    show_product_details(physical)
+    show_product_details(digital)
+
+    print("\nUpdating stock:")
+    physical.update_stock(14)
+    digital.update_stock(99)
+
+    physical.display_information()
+    digital.display_information()
+
+    mixed_inventory = Inventory("Mixed Inventory")
+    mixed_inventory.add_product(physical)
+    mixed_inventory.add_product(digital)
+
+    print("\nProducts in mixed inventory:")
+    for product in mixed_inventory.products:
+        show_product_details(product)
+        print("--------------------------------")
 
 
 if __name__ == "__main__":
