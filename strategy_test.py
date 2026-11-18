@@ -2,7 +2,7 @@
 from supplier import Supplier
 from digital_product import DigitalProduct
 from order import Order
-from discount_strategy import NoDiscount, PercentageDiscount, BulkDiscount
+from discount_strategy import NoDiscount, PercentageDiscount, BulkDiscount, StudentDiscount
 
 
 def main() -> None:
@@ -19,6 +19,9 @@ def main() -> None:
 
     order.set_discount(PercentageDiscount(10))
     print(f"Percentage discount total: ${order.calculate_total():.2f}")
+
+    order.set_discount(StudentDiscount())
+    print(f"Student discount total: ${order.calculate_total():.2f}")
 
 
 if __name__ == "__main__":
