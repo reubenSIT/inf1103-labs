@@ -1,4 +1,4 @@
-failed_entries = 0
+failed_entries = 0 
 deliveries_processed = 0
 
 def load_inventory():
@@ -54,7 +54,7 @@ inventory, transaction_history = load_inventory()
 while True:
     stock = get_valid_input()
 
-    if stock == "quit":
+    if stock == "quit": 
         save_inventory(inventory, transaction_history)
         generate_report(deliveries_processed,failed_entries)
         break
@@ -79,3 +79,5 @@ while True:
 
 
     
+
+
