@@ -1,6 +1,6 @@
+
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 from inventory import Inventory
 from order import Order
 from product import Product
@@ -15,8 +15,15 @@ def main() -> None:
     supplier = Supplier("S001", "Tech Supplies Pte Ltd",
                         "contact@techsupplies.example")
 
-    physical = PhysicalProduct("P001", "Laptop", 1200.00, 15, 2.5, supplier)
-    digital = DigitalProduct("D001", "Photo Editor", 49.90, 100, 850, supplier)
+    physical = ProductFactory.create(
+        "physical", "P001", "Laptop", 1200.00, 15, supplier,
+        weight=2.5
+    )
+
+    digital = ProductFactory.create(
+        "digital", "D001", "Photo Editor", 49.90, 100, supplier,
+        download_size=850
+    )
 
     print("\nPhysical product supplier:")
     physical.display_supplier_information()
